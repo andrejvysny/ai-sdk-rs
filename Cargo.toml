@@ -1,0 +1,128 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/ai_error",
+    "crates/ai_core",
+    "crates/ai_stream",
+    "crates/ai_ui_protocol",
+    "crates/ai_middleware",
+    "crates/ai_structured",
+    "crates/ai_tools",
+    "crates/ai_tools_derive",
+    "crates/ai_agents",
+    "crates/ai_rag",
+    "crates/ai_providers",
+    "crates/ai_providers/openai",
+    "crates/ai_providers/anthropic",
+    "crates/ai_providers/google",
+    "crates/ai_providers/ollama",
+    "examples/chats/axum_sse",
+    "examples/agents/tool_loop",
+    "examples/rag/axum_retriever",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.83"
+authors = ["AI SDK Contributors"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/ai-sdk/ai-sdk-rs"
+homepage = "https://ai-sdk.dev"
+keywords = ["ai", "llm", "openai", "chat", "streaming"]
+categories = ["api-bindings", "asynchronous", "web-programming"]
+
+[workspace.dependencies]
+# Core serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# JSON Schema
+schemars = { version = "0.8", features = ["derive"] }
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+tokio-stream = "0.1"
+tokio-util = { version = "0.7", features = ["codec"] }
+futures = "0.3"
+futures-util = "0.3"
+async-trait = "0.1"
+pin-project-lite = "0.2"
+
+# HTTP client
+reqwest = { version = "0.11", default-features = false, features = ["json", "stream", "rustls-tls"] }
+bytes = "1.5"
+http = "1.0"
+http-body = "1.0"
+http-body-util = "0.1"
+
+# Web framework (for examples)
+axum = { version = "0.7", features = ["http2", "macros"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["trace", "cors", "timeout"] }
+
+# Tracing and observability
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+opentelemetry = "0.22"
+opentelemetry_sdk = "0.22"
+
+# Utilities
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.6", features = ["v4", "serde"] }
+url = "2.5"
+
+# Proc macros
+proc-macro2 = "1.0"
+quote = "1.0"
+syn = { version = "2.0", features = ["full", "extra-traits"] }
+
+# Testing
+mockito = "1.2"
+proptest = "1.4"
+criterion = "0.5"
+
+# Development dependencies
+dotenv = "0.15"
+
+# Internal workspace crates
+ai_error = { path = "crates/ai_error", version = "0.1.0" }
+ai_core = { path = "crates/ai_core", version = "0.1.0" }
+ai_stream = { path = "crates/ai_stream", version = "0.1.0" }
+ai_ui_protocol = { path = "crates/ai_ui_protocol", version = "0.1.0" }
+ai_middleware = { path = "crates/ai_middleware", version = "0.1.0" }
+ai_structured = { path = "crates/ai_structured", version = "0.1.0" }
+ai_tools = { path = "crates/ai_tools", version = "0.1.0" }
+ai_tools_derive = { path = "crates/ai_tools_derive", version = "0.1.0" }
+ai_agents = { path = "crates/ai_agents", version = "0.1.0" }
+ai_rag = { path = "crates/ai_rag", version = "0.1.0" }
+ai_providers = { path = "crates/ai_providers", version = "0.1.0" }
+ai_providers_openai = { path = "crates/ai_providers/openai", version = "0.1.0" }
+ai_providers_anthropic = { path = "crates/ai_providers/anthropic", version = "0.1.0" }
+ai_providers_google = { path = "crates/ai_providers/google", version = "0.1.0" }
+ai_providers_ollama = { path = "crates/ai_providers/ollama", version = "0.1.0" }
+
+[profile.dev]
+opt-level = 0
+debug = true
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+panic = "abort"
+opt-level = 3
+strip = false
+
+[profile.release-small]
+inherits = "release"
+opt-level = "s"
+strip = true
+lto = "fat"
+codegen-units = 1
+
+[profile.bench]
+inherits = "release"

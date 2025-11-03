@@ -1,0 +1,18 @@
+[package]
+name = "ai_providers_openai"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+ai_core = { path = "../../ai_core" }
+ai_error = { path = "../../ai_error" }
+reqwest = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+async-trait = { workspace = true }
+tracing = { workspace = true }
+bytes = { workspace = true }
+futures = { workspace = true }

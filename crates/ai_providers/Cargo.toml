@@ -1,0 +1,10 @@
+[package]
+name = "ai_providers"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+ai_core = { path = "../ai_core" }
+ai_error = { path = "../ai_error" }
